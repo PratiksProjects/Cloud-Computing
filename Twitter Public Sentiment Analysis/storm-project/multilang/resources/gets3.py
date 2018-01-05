@@ -12,8 +12,8 @@ from collections import deque
 cwd = os.getcwd()
 
 LOCAL_PATH = cwd + '/batchfile/'
-AWS_KEY="AKIAJ45EM3OOYC3T3GZQ"
-AWS_SECRET="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"
+AWS_KEY=""
+AWS_SECRET=""
 REGION="us-east-1"
 BUCKET = "tweetcollect"
 #AWS_KEY2 =
