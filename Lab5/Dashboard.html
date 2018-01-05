@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<!--Bootstrap  -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--HighCharts  -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript" src="graphs.js"></script>
+    <body>
+        <div style="width: 100%;overflow:auto;padding-left:10px;">
+            <div style="float:left; width: 80%">
+                <form id = "graphForm" style = "max-width: 500px;" onsubmit="return false">
+                  <h2>Select a graph:</h2>
+                  <div class="form-group">
+                    <label for="statType">Select Statistic Type:</label>
+                    <select class="form-control" id="statType">
+                      <option>Average</option>
+                      <option>Maximum</option>
+                      <option>Minimum</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="statType">Data Type:</label>
+                    <select class="form-control" id="dataType">
+                      <option>Temperature</option>
+                      <option>Humidity</option>
+                      <option>Light</option>
+                      <option>co2</option>
+                    </select>
+                  </div>
+                    <button onclick="makeChart()" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+            <div style="float:center;">
+                <div id="container"></div>
+            </div>
+        </div>
+    </body>
+</html>

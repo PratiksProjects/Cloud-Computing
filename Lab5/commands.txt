@@ -1,0 +1,69 @@
+#Install required packages
+sudo pip install requests
+sudo pip install elasticsearch
+sudo pip install requests-aws4auth
+
+------
+#Create ElasticSearch Index:
+curl -XPUT 'search-esdomain-kpidoc4kzpilk24sijrxcmp5ge.us-east-1.es.amazonaws.com/sensordata' -H 'Content-Type: application/json' -d '{  "mappings": {
+    "_default_": {
+      "properties": {
+        "timestamp": {
+          "type":   "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+	"timestampNum": {
+          "type":   "date",
+          "format": "epoch_millis"
+        },
+	"temperature" : { "type" : "integer" },
+	"humidity" : { "type" : "integer" },
+	"light" : { "type" : "integer" },
+	"co2" : { "type" : "integer" }
+      }
+    }
+  }
+}
+'
+
+----------
+
+#Kibana - Timelion queries:
+.es(index=sensordata,timefield=timestampNum,metric=avg:temperature).color('#4285f4')
+.es(index=sensordata,timefield=timestampNum,metric=avg:humidity).color('#f4b400')
+.es(index=sensordata,timefield=timestampNum,metric=avg:light).color('#db4437')
+.es(index=sensordata,timefield=timestampNum,metric=avg:co2).color('#0f9d58')
+
+
+-------
+
+#Get average temperature in last 5 seconds
+
+curl -XGET 'search-esdomain-kpidoc4kzpilk24sijrxcmp5ge.us-east-1.es.amazonaws.com/sensordata/_search?pretty' -d '{
+"query": {
+    "bool": {
+      "filter": {
+        "range": {
+          "timestampNum": {
+            "gt": "now-5s"
+          }
+        }
+      }
+    }
+  },    
+    "aggs": {
+        "my_date_histo":{                
+            "date_histogram":{
+                "field":"timestampNum",
+                "interval":"5s"
+            },
+            "aggs":{
+                "the_avg":{
+                    "avg":{ "field": "temperature" } 
+                }
+            }
+        }
+    }
+}
+'
+

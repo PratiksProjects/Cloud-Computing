@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Students App</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<style type="text/css">
+    .table.table-striped {
+        width: 75%;
+        margin: 0 auto;
+        border-width: 1px;
+        background-color: rgba(150, 150, 150, 0.26);
+        border-color: #000000;
+    }
+</style>
+
+<body>
+
+    <center>
+        <h1>Students Enrolled in {{course_id}}</h1>
+    <br>
+    
+    <div class="dropdown" style="display: inline-block;">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Semester
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="#" class="semesterDropdown" id="allSemester" >All</a></li>
+            <li><a href="#" class="semesterDropdown" id="fall">Fall</a></li>
+            <li><a href="#" class="semesterDropdown" id="spring">Spring</a></li>
+        </ul>
+    </div>
+    <div class="dropdown" style="display: inline-block;">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Year
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="#" class="yearDropdown" id="allYears">All</a></li>
+            <li><a href="#" class="yearDropdown" id="2015">2015</a></li>
+            <li><a href="#" class="yearDropdown" id="2016">2016</a></li>
+            <li><a href="#" class="yearDropdown" id="2017">2017</a></li>
+        </ul>
+    </div>
+    <br>
+    </center>
+    <br>
+
+<table class="table table-striped" id="studentsTable">
+    <tr>
+        <th>Student ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Semester</th>
+        <th>Year</th>
+    </tr>
+
+{% for student in students %}
+<tr>
+    <td>{{student.ID}}</td>
+    <td>{{student.name}}</td>
+    <td>{{student.lastName}}</td>
+    <td id="semester">{{student.semester}}</td>
+    <td id="year">{{student.year}}</td>
+</tr>
+{% endfor %}
+
+</table>
+<script type="text/javascript">
+var semester = "";
+var year = "";
+$(document).ready(function() {
+    semester = "all";
+    year = "all";
+});
+$(".semesterDropdown").on('click', function() {
+    if($(this).attr("id") == "fall") {
+        semester = "Fall";
+    } else if($(this).attr("id") == "spring") {
+        semester = "Spring";
+    } else {
+        semester = "all";
+    }
+    filterTable();
+});
+$(".yearDropdown").on('click', function() {
+    if($(this).attr("id") == "2015") {
+        year = "2015";
+    } else if($(this).attr("id") == "2016") {
+        year = "2016";
+    } else if($(this).attr("id") == "2017") {
+        year = "2017";
+    } else {
+        year = "all";
+    }
+    filterTable();
+});
+function filterTable(){
+    $('#studentsTable tr').each(function(){
+        $(this).find('td').each(function(){
+            var hide = false;
+            if($(this).attr("id") == "year" && year != "all") {
+                if($(this).text() != year){
+                    $(this).parents("tr").hide();
+                    hide = true;
+                }
+            }
+            if($(this).attr("id") == "semester") {
+                if($(this).text() != semester && semester != "all"){
+                    $(this).parents("tr").hide();
+                    hide = true;
+                }
+            }
+            if(hide == false) {
+                $(this).parents("tr").show();
+            }
+        });
+    });
+}
+
+
+</script>
+
+</body>
+</html>

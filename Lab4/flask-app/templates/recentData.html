@@ -1,0 +1,97 @@
+<html>
+<body>
+        <style>
+            .wrapper {
+            position: relative;
+            width: 640px;
+            height: 480px;
+            margin: 50px auto 0 auto;
+            padding-bottom: 30px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            clear: both;
+            }
+            .box {
+            float: left;
+            width: 50%;
+            height: 50%;
+            box-sizing: border-box;
+            }
+            .container {
+            width: 450px;
+            margin: 0 auto;
+            text-align: center;
+            }
+            .gauge {
+            width: 320px;
+            height: 240px;
+            }
+            button {
+            margin: 30px 5px 0 2px;
+            padding: 16px 40px;
+            border-radius: 5px;
+            font-size: 18px;
+            border: none;
+            background: #34aadc;
+            color: white;
+            cursor: pointer;
+            }
+        </style>
+    <h1>Sensor Statistics from the past minute</h1>
+    <h2>Maximum Values</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>CO2</th>
+        <th>Temperature</th>
+        <th>Light</th>
+        <th>Humidity</th>
+    </tr>
+    <tr>
+        <td>{{data["max"]["co2"]}}</td>
+        <td>{{data["max"]["temperature"]}}</td>
+        <td>{{data["max"]["light"]}}</td>
+        <td>{{data["max"]["humidity"]}}</td>
+    </tr>
+    </table>
+    <br>
+    <br>
+    <h2>Minimum Values</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>CO2</th>
+        <th>Temperature</th>
+        <th>Light</th>
+        <th>Humidity</th>
+    </tr>
+    <tr>
+        <td>{{data["min"]["co2"]}}</td>
+        <td>{{data["min"]["temperature"]}}</td>
+        <td>{{data["min"]["light"]}}</td>
+        <td>{{data["min"]["humidity"]}}</td>
+    </tr>
+    </table>
+    <br>
+    <br>
+    <h2>Mean Values</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>CO2</th>
+        <th>Temperature</th>
+        <th>Light</th>
+        <th>Humidity</th>
+    </tr>
+    <tr>
+        <td>{{data["mean"]["co2"]}}</td>
+        <td>{{data["mean"]["temperature"]}}</td>
+        <td>{{data["mean"]["light"]}}</td>
+        <td>{{data["mean"]["humidity"]}}</td>
+    </tr>
+    </table>
+    <script>
+      //reloads page every minute with data from the past minute
+      setTimeout(function () {
+            location.reload()
+        }, 60000);
+    </script>
+ </body>
+ </html>
